@@ -1,0 +1,21 @@
+<html>
+    <script id="vertex-shader-2d" type="notjs">
+        attribute vec4 b_position;
+
+        void main() {
+            gl_Position = b_position;
+        }
+    </script>
+    <script id="fragment-shader-2d" type="notjs">
+        precision mediump float;
+
+        void main() {
+            gl_FragColor = vec4(1, 0.5, 0.5, 1);
+        }
+    </script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <body>
+        <canvas id="canvas" style="width: 100vw; height: 100vh; display: block;"></canvas>
+    </body>
+    <script src="index.js"></script>
+</html>
