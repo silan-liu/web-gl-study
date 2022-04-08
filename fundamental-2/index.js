@@ -69,18 +69,18 @@ function main() {
     // 将 gl.ARRAY_BUFFER 与 positionBuffer 绑定起来，也就是说 gl.ARRAY_BUFFER 就表示 positionBuffer。
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
-    // 6 个顶点，像素值，左下角是 (0, 0)
-    let positions = [
-        0, 0,
-        80, 20,
-        10, 30,
-        10, 30,
-        80, 20,
-        80, 30,
-    ];
+    // // 6 个顶点，像素值，左下角是 (0, 0)
+    // let positions = [
+    //     0, 0,
+    //     80, 20,
+    //     10, 30,
+    //     10, 30,
+    //     80, 20,
+    //     80, 30,
+    // ];
 
-    // 把顶点数据放入 buffer
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+    // // 把顶点数据放入 buffer
+    // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
     // 更新 canvas 大小
     webglUtils.resizeCanvasToDisplaySize(gl.canvas);
@@ -102,6 +102,9 @@ function main() {
 
     console.log('canvas size:', gl.canvas.width, gl.canvas.height);
 
+    // 设置颜色
+    let colorUniformLocation = gl.getUniformLocation(program, "u_color");
+
     // 打开属性
     gl.enableVertexAttribArray(positionAttributeLocation);
 
@@ -122,14 +125,45 @@ function main() {
     // 告知 attribute，如何从 buffer 中拿数据
     gl.vertexAttribPointer(positionAttributeLocation, size, type, normalized, stride, offset);
 
-    // 三角形
-    const primitiveType = gl.TRIANGLES;
+    // draw random rectangles
+    drawRandomRectangle(gl, colorUniformLocation);
+}
 
-    // 执行 6 次顶点着色器，绘制 2 个三角形
-    const count = 6;
+function drawRandomRectangle(gl, colorUniformLocation) {
+    for (let i = 0; i < 50; i++) {
+        // random rectangles positions
+        setRectangle(gl, randomInt(300), randomInt(300),randomInt(300),randomInt(300));
 
-    // 画一个三角形
-    gl.drawArrays(primitiveType, offset, count);
+        // random color
+        gl.uniform4f(colorUniformLocation, Math.random(), Math.random(), Math.random(), 1);
+
+        // draw
+        // 三角形
+        const primitiveType = gl.TRIANGLES;
+
+        // 执行 6 次顶点着色器，绘制 2 个三角形
+        const count = 6;
+
+        gl.drawArrays(primitiveType, 0, count);
+    }
+}
+
+function randomInt(range) {
+    return Math.floor(Math.random() * range);
+}
+
+function setRectangle(gl, x, y, width, height) {
+    let positions = [
+        x, y,
+        x, y + height,
+        x + width, y,
+        x, y + height,
+        x + width, y,
+        x + width, y + height
+    ]
+
+    // 数据写入缓冲区
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 }
 
 main()

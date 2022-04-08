@@ -15,14 +15,20 @@
             // convert to [-1, 1]
             vec2 clipSpace = zeroToTwo - 1.0;
 
-            gl_Position = vec4(clipSpace, 0, 1);
+            // 翻转 y 坐标，默认是左下角为原点
+            gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+
+            //gl_Position = vec4(clipSpace, 0, 1);
         }
     </script>
     <script id="fragment-shader-2d" type="notjs">
         precision mediump float;
+        uniform vec4 u_color;
 
         void main() {
-            gl_FragColor = vec4(1, 0.5, 0.5, 1);
+            //gl_FragColor = vec4(1, 0.5, 0.5, 1);
+
+            gl_FragColor = u_color;
         }
     </script>
     <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
