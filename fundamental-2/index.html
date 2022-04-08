@@ -1,0 +1,33 @@
+<html>
+    <script id="vertex-shader-2d" type="notjs">
+        attribute vec2 b_position;
+        uniform vec2 u_resolution;
+
+        void main() {
+
+            // convert pixel to clip space，[-1, 1]
+            // convert to [0, 1]
+            vec2 zeroToOne = b_position / u_resolution;
+
+            // convert to [0, 2]
+            vec2 zeroToTwo = zeroToOne * 2.0;
+
+            // convert to [-1, 1]
+            vec2 clipSpace = zeroToTwo - 1.0;
+
+            gl_Position = vec4(clipSpace, 0, 1);
+        }
+    </script>
+    <script id="fragment-shader-2d" type="notjs">
+        precision mediump float;
+
+        void main() {
+            gl_FragColor = vec4(1, 0.5, 0.5, 1);
+        }
+    </script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <body>
+        <canvas id="canvas" style="width: 100vw; height: 100vh; display: block;"></canvas>
+    </body>
+    <script src="index.js"></script>
+</html>
