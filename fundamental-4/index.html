@@ -1,0 +1,44 @@
+<html>
+    <link rel="stylesheet" href="index.css">
+    <script id="vertex-shader-2d" type="notjs">
+        attribute vec2 b_position;
+        attribute vec4 a_color;
+
+        uniform mat3 u_matrix;
+
+        varying vec4 v_color;
+
+        void main() {
+
+            // 矩阵变换
+            gl_Position = vec4((u_matrix * vec3(b_position, 1)).xy, 0, 1);
+
+            // color 由程序设置
+            v_color = a_color;
+        }
+    </script>
+    <script id="fragment-shader-2d" type="notjs">
+        precision mediump float;
+        varying vec4 v_color;
+
+        void main() {
+            gl_FragColor = v_color;
+        }
+    </script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/webgl-lessons-ui.js"></script>
+    <script src="https://webglfundamentals.org/webgl/resources/m3.js"></script>
+    <body>
+        <canvas id="canvas" style="width: 100vw; height: 100vh; display: block;"></canvas>
+        <div id="uiContainer">
+            <div id="ui">
+              <div id="x"></div>
+              <div id="y"></div>
+              <div id="angle"></div>
+              <div id="scaleX"></div>
+              <div id="scaleY"></div>
+            </div>
+          </div>
+    </body>
+    <script src="index.js"></script>
+</html>
