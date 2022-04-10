@@ -118,8 +118,11 @@ function main() {
     }
   }
 
-  function updateAngle() {
+  function updateAngle(event, ui) {
     let angleInDegress = 360 - ui.value;
+
+    console.log("updateAngle:", angleInDegress);
+
     angleInRadians = angleInDegress * Math.PI / 180;
 
     drawScene();
